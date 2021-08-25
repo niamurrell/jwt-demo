@@ -1,6 +1,9 @@
 const express = require('express');
 const app = express();
 
+// Configure Resources
+app.use(express.json());
+
 // Set Environment & Variables
 const nodeEnv = process.env.NODE_ENV || 'development';
 if (nodeEnv === 'development') require('dotenv').config();
