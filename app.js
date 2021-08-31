@@ -10,9 +10,11 @@ if (nodeEnv === 'development') require('dotenv').config();
 
 // Set Up Routes
 const auth = require('./routes/auth');
+const posts = require('./routes/posts');
 
 app.get('/', (req, res) => res.send('It works'));
 app.use('/auth', auth);
+app.use('/posts', posts);
 
 // Run the app
 const port = process.env.PORT;
