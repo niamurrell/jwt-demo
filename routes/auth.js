@@ -45,14 +45,50 @@ router.post('/signup', [
 		password: hashedPass
 	});
 
-	let payload = { isAuthorized: true, email };
+	let payload = { isAuthorized: true, email }; // BP: don't store email in token
 	let key = process.env.JWT_SECRET;
 	let tokenOptions = { expiresIn: '6h' };
 
 	const token = await JWT.sign(payload, key, tokenOptions);
 
 	// ALL CHECKS PASSED - SEND RESULT
-	console.log({ token });
+	console.log(users);
+	res.json({ token });
+});
+
+router.post('/login', async (req, res) => {
+	const { password, email } = req.body;
+
+	let existingUser = users.find((user) => {
+		// You could use express-validator here to prevent unnecessary db requests
+		return user.email === email;
+	});
+
+	if (!existingUser) {
+		return res.status(400).json({
+			'errors': [
+				{ 'msg': 'Invalid credentials.' }
+			]
+		})
+	}
+
+	let isMatch = await bcrypt.compare(password, existingUser.password) // returns boolean
+
+	if (!isMatch) {
+		return res.status(400).json({
+			'errors': [
+				{ 'msg': 'Invalid credentials.' }
+			]
+		})
+	}
+
+	let payload = { isAuthorized: true, email }; // BP: don't store email in token
+	let key = process.env.JWT_SECRET;
+	let tokenOptions = { expiresIn: '6h' };
+
+	const token = await JWT.sign(payload, key, tokenOptions);
+
+	// ALL CHECKS PASSED - SEND JWT
 	res.json({ token });
 });
 
