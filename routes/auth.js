@@ -1,4 +1,5 @@
 const router = require('express').Router();
+const JWT = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const { check, validationResult } = require('express-validator');
 const { users } = require('../db');
@@ -44,9 +45,15 @@ router.post('/signup', [
 		password: hashedPass
 	});
 
-	console.log(users);
+	let payload = { isAuthorized: true, email };
+	let key = process.env.JWT_SECRET;
+	let tokenOptions = { expiresIn: '6h' };
+
+	const token = await JWT.sign(payload, key, tokenOptions);
+
 	// ALL CHECKS PASSED - SEND RESULT
-	res.send(`Signup working and validated with ${hashedPass} and ${email}`);
+	console.log({ token });
+	res.json({ token });
 });
 
 module.exports = router;
