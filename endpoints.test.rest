@@ -48,7 +48,7 @@ Content-Type: application/json
 GET http://localhost:5000/posts/private HTTP/1.1
 Content-Type: application/json
 
-### Get all private posts - should be successful once signed in
+### Get all private posts - should be successful once signed in, with a valid token replacing the below
 GET http://localhost:5000/posts/private HTTP/1.1
 Content-Type: application/json
 Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc0F1dGhvcml6ZWQiOnRydWUsImVtYWlsIjoiYmV0YUBnYW1tYS5jb20iLCJpYXQiOjE2MzA0OTg0NTEsImV4cCI6MTYzMDUyMDA1MX0.isAUAbEYqIJz69WDseoii-FdmlLUrV5J6yUZ4vK0Mgs

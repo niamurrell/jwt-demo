@@ -1,8 +1,12 @@
 {
-  "name": "demo-api",
+  "name": "jwt-demo",
   "version": "1.0.0",
   "author": "Nia Murrell",
   "description": "",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/niamurrell/jwt-demo"
+  },
   "main": "app.js",
   "scripts": {
     "start": "node app.js",

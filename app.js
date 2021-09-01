@@ -17,7 +17,7 @@ app.use('/auth', auth);
 app.use('/posts', posts);
 
 // Run the app
-const port = process.env.PORT;
+const port = process.env.PORT || 5000;
 app.listen(port, () => {
 	console.log(`App is running on port ${port} in ${nodeEnv} mode.`);
 });
