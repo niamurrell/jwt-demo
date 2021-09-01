@@ -47,12 +47,11 @@ router.post('/signup', [
 
 	let payload = { isAuthorized: true, email }; // BP: don't store email in token
 	let key = process.env.JWT_SECRET;
-	let tokenOptions = { expiresIn: '6h' };
+	let tokenOptions = { expiresIn: '1h' };
 
 	const token = await JWT.sign(payload, key, tokenOptions);
 
 	// ALL CHECKS PASSED - SEND RESULT
-	console.log(users);
 	res.json({ token });
 });
 
@@ -84,7 +83,7 @@ router.post('/login', async (req, res) => {
 
 	let payload = { isAuthorized: true, email }; // BP: don't store email in token
 	let key = process.env.JWT_SECRET;
-	let tokenOptions = { expiresIn: '6h' };
+	let tokenOptions = { expiresIn: '1h' };
 
 	const token = await JWT.sign(payload, key, tokenOptions);
 
