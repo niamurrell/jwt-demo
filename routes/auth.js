@@ -5,7 +5,7 @@ const { check, validationResult } = require('express-validator');
 const { users } = require('../db');
 
 router.get('/', (req, res) => {
-	res.send('Yes auth works.');
+	res.status(200).send('Yes auth works.');
 });
 
 router.post('/signup', [
@@ -52,7 +52,7 @@ router.post('/signup', [
 	const token = await JWT.sign(payload, key, tokenOptions);
 
 	// ALL CHECKS PASSED - SEND RESULT
-	res.json({ token });
+	res.status(201).json({ token });
 });
 
 router.post('/login', async (req, res) => {
@@ -64,7 +64,7 @@ router.post('/login', async (req, res) => {
 	});
 
 	if (!existingUser) {
-		return res.status(400).json({
+		return res.status(401).json({
 			'errors': [
 				{ 'msg': 'Invalid credentials.' }
 			]
@@ -74,7 +74,7 @@ router.post('/login', async (req, res) => {
 	let isMatch = await bcrypt.compare(password, existingUser.password) // returns boolean
 
 	if (!isMatch) {
-		return res.status(400).json({
+		return res.status(401).json({
 			'errors': [
 				{ 'msg': 'Invalid credentials.' }
 			]
@@ -88,7 +88,7 @@ router.post('/login', async (req, res) => {
 	const token = await JWT.sign(payload, key, tokenOptions);
 
 	// ALL CHECKS PASSED - SEND JWT
-	res.json({ token });
+	res.status(200).json({ token });
 });
 
 module.exports = router;
