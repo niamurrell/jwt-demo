@@ -4,6 +4,12 @@ const bcrypt = require('bcrypt');
 const { check, validationResult } = require('express-validator');
 const { users } = require('../db');
 
+const cookieOptions = {
+	maxAge: 1000 * 30, // cookie will expire after 30 seconds
+	secure: true, // cookies will only be sent over HTTPS
+	httpOnly: true // cookie cannot be accessed from JS in the browser console
+};
+
 router.get('/', (req, res) => {
 	res.status(200).send('Yes auth works.');
 });
@@ -52,6 +58,7 @@ router.post('/signup', [
 	const token = await JWT.sign(payload, key, tokenOptions);
 
 	// ALL CHECKS PASSED - SEND RESULT
+	res.cookie('jwt', token, cookieOptions);
 	res.status(201).json({ token });
 });
 
@@ -88,6 +95,7 @@ router.post('/login', async (req, res) => {
 	const token = await JWT.sign(payload, key, tokenOptions);
 
 	// ALL CHECKS PASSED - SEND JWT
+	res.cookie('jwt', token, cookieOptions);
 	res.status(200).json({ token });
 });
 
