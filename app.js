@@ -1,8 +1,10 @@
 const express = require('express');
 const app = express();
+const cookieParser = require('cookie-parser');
 
 // Configure Resources
 app.use(express.json());
+app.use(cookieParser());
 
 // Set Environment & Variables
 const nodeEnv = process.env.NODE_ENV || 'development';
